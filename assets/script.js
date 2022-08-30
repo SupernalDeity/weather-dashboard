@@ -68,6 +68,20 @@ var saveLocaleStorage = function(city) {
     localStorage.setItem('SearchedCities', data);
 };
 
+var oldSearches = function(event) {
+    event.preventDefault();
+    if (event.target.matches('button')) {
+        var citySearch = event.target.textContent;
+        var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearch}&appid=${appid}`;
+        fetch(geoURL)
+            .then(toJSON)
+            .then(getLocation);
+    }
+};
+
 searchBtn.addEventListener('click', searchCity);
+
+searchedCitiesEl.addEventListener('click', oldSearches);
+
 
 displaySearchedCities();
