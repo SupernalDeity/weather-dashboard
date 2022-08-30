@@ -39,8 +39,9 @@ var displayWeather = function (data, city) {
 
 var displaySearchedCities = function() {
     var cities = JSON.parse(localStorage.getItem('SearchedCities')) || [];
+    var sevenCities = cities.slice(cities.length - 7);
     searchedCitiesEl.innerHTML = null;
-    for (var city of cities) {
+    for (var city of sevenCities) {
         var cityLiEl = document.createElement('li');
         cityLiEl.className = "list-group-item";
         var cityButtonEl = document.createElement('button');
@@ -53,6 +54,7 @@ var displaySearchedCities = function() {
 
 var searchCity = function(event) {
     event.preventDefault();
+    jumbotronEl.innerHTML = null;
     var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearch.value}&appid=${appid}`;
     fetch(geoURL)
         .then(toJSON)
@@ -67,3 +69,5 @@ var saveLocaleStorage = function(city) {
 };
 
 searchBtn.addEventListener('click', searchCity);
+
+displaySearchedCities();
