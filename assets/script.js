@@ -12,6 +12,7 @@ var getLocation = function (locations) {
         console.log('LAT', city.lat);
         console.log('LON', city.lon);
         
+        saveLocaleStorage(city.name);
         getWeather(city);
 };
 
@@ -40,6 +41,13 @@ var searchCity = function(event) {
     fetch(geoURL)
         .then(toJSON)
         .then(getLocation);
+};
+
+var saveLocaleStorage = function(city) {
+    var cities = JSON.parse(localStorage.getItem('SearchedCities')) || [];
+    cities.push(city);
+    var data = JSON.stringify(cities);
+    localStorage.setItem('SearchedCities', data);
 };
 
 searchBtn.addEventListener('click', searchCity);
