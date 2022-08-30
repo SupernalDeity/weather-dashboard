@@ -47,7 +47,7 @@ var displayWeather = function (data, city) {
     imgEl.width = 90;
     imgEl.height = 90;
     imgEl.alt= icon;
-    imgEl.src= `http://openweathermap.org/img/wn/${icon}@2x.png`;
+    imgEl.src= `https://openweathermap.org/img/wn/${icon}@2x.png`;
     
     jumbotronEl.appendChild(h2El);
     jumbotronEl.appendChild(imgEl);
@@ -86,7 +86,7 @@ var displayWeather = function (data, city) {
         imgEL.width = 45;
         imgEL.height = 45;
         imgEL.alt = icon;
-        imgEL.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+        imgEL.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
         fiveDaysEl.appendChild(divOne);
         divOne.appendChild(divTwo);
@@ -116,7 +116,7 @@ var displaySearchedCities = function() {
 var searchCity = function(event) {
     event.preventDefault();
     jumbotronEl.innerHTML = null;
-    var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearch.value}&appid=${appid}`;
+    var geoURL = `https://api.openweathermap.org/geo/1.0/direct?q=${citySearch.value}&appid=${appid}`;
     fetch(geoURL)
         .then(toJSON)
         .then(getLocation);
@@ -134,7 +134,7 @@ var oldSearches = function(event) {
     jumbotronEl.innerHTML = null;
     if (event.target.matches('button')) {
         var citySearch = event.target.textContent;
-        var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearch}&appid=${appid}`;
+        var geoURL = `https://api.openweathermap.org/geo/1.0/direct?q=${citySearch}&appid=${appid}`;
         fetch(geoURL)
             .then(toJSON)
             .then(getLocation);
