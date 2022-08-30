@@ -1,35 +1,28 @@
 var appid = '485bbc753e29e9770f09ca55c32c6d79';
-var q = document.querySelector('#q');
+var citySearch = document.querySelector('#citySearch');
 var jumbotronEl = document.querySelector('#jumbotron');
-
-q = "Charlotte"
-
-var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${q}&appid=${appid}`;
+var searchBtn = document.querySelector('#search');
 
 var toJSON =function(response) {
     return response.json();
 };
 
-function getLocation() {
-    fetch(geoURL)
-        .then(toJSON)
-        .then(function (locations) {
-            var city = locations[0];
-            console.log('LAT', city.lat);
-            console.log('LON', city.lon);
-
+var getLocation = function (locations) {
+        var city = locations[0];
+        console.log('LAT', city.lat);
+        console.log('LON', city.lon);
+        
         getWeather(city);
-        })
 };
 
 var getWeather = function(city) {
     var oneCall = `https://api.openweathermap.org/data/2.5/onecall?lat=${city.lat}&lon=${city.lon}&appid=${appid}&units=imperial&exclude=hourly,minutely`;
-
+    
     fetch(oneCall)
         .then(toJSON)
         .then(function(data){
             displayWeather(data, city);
-        })
+    });
 };
 
 var displayWeather = function (data, city) {
@@ -41,7 +34,12 @@ var displayWeather = function (data, city) {
     jumbotronEl.appendChild(tempEl);
 };
 
+var searchCity = function(event) {
+    event.preventDefault();
+    var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearch.value}&appid=${appid}`;
+    fetch(geoURL)
+        .then(toJSON)
+        .then(getLocation);
+};
 
-fetch(geoURL)
-    .then(toJSON)
-    .then(getLocation);
+searchBtn.addEventListener('click', searchCity);
