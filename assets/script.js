@@ -33,24 +33,28 @@ var displayWeather = function (data, city) {
     console.log(data);
     var h2El = document.createElement('h2');
     var tempEl = document.createElement('p');
-    var windEL = document.createElement('p')
-    var humidityEL = document.createElement('p')
-    var uvEL = document.createElement('p')
+    var windEl = document.createElement('p')
+    var humidityEl = document.createElement('p')
+    var uvEl = document.createElement('p')
     var icon = data.current.weather[0].icon;
-    var imgEL = document.createElement('img');
+    var imgEl = document.createElement('img');
     h2El.textContent = city.name;
     tempEl.textContent = 'TEMP: ' + data.current.temp + "°F";
-    windEL.textContent = 'WIND: ' + data.current.wind_speed +'MPH';
-
-    imgEL.width = 90;
-    imgEL.height = 90;
-    imgEL.alt= icon;
-    imgEL.src= `http://openweathermap.org/img/wn/${icon}@2x.png`;
-
+    windEl.textContent = 'WIND: ' + data.current.wind_speed + ' MPH';
+    humidityEl.textContent = 'HUMIDITY: ' + data.current.humidity + ' %';
+    uvEl.textContent = 'UV Index: ' + data.current.uvi;
+    
+    imgEl.width = 90;
+    imgEl.height = 90;
+    imgEl.alt= icon;
+    imgEl.src= `http://openweathermap.org/img/wn/${icon}@2x.png`;
+    
     jumbotronEl.appendChild(h2El);
-    jumbotronEl.appendChild(imgEL);
+    jumbotronEl.appendChild(imgEl);
     jumbotronEl.appendChild(tempEl);
-    jumbotronEl.appendChild(windEL);
+    jumbotronEl.appendChild(windEl);
+    jumbotronEl.appendChild(humidityEl);
+    jumbotronEl.appendChild(uvEl);
     
     var fiveDays = data.daily.slice(1,6);
     console.log(fiveDays);
@@ -59,19 +63,25 @@ var displayWeather = function (data, city) {
         var icon = day.weather[0].icon;
         var date = new Date(day.dt * 1000).toLocaleDateString();
         var temp = day.temp.day;
+        var wind = day.wind_speed;
+        var humidity = day.humidity;
         var divOne = document.createElement('div');
+        var divTwo = document.createElement('div');
+        var h5El = document.createElement('h5');
+        var tempEl = document.createElement('p');
+        var imgEL = document.createElement('img'); 
+        var windEl = document.createElement('p');
+        var humidityEl = document.createElement('p');
         divOne.className = "card col-12 col-md-2 mx-2";
         divOne.style.width = '18rem';
-        var divTwo = document.createElement('div');
         divTwo.className = "card-body";
-        var h5El = document.createElement('h5');
         h5El.className = "card-title";
-        var tempEl = document.createElement('p');
         tempEl.className = "card-text";
-        var imgEL = document.createElement('img'); 
-
+        
         h5El.textContent = date;
         tempEl.textContent = "TEMP: " + temp + "°F";
+        windEl.textContent = 'WIND: ' + wind + ' MPH';
+        humidityEl.textContent = 'Humidity: ' + humidity;
         
         imgEL.width = 45;
         imgEL.height = 45;
@@ -83,7 +93,8 @@ var displayWeather = function (data, city) {
         divTwo.appendChild(h5El);
         divTwo.appendChild(imgEL);
         divTwo.appendChild(tempEl);
-        
+        divTwo.appendChild(windEl);      
+        divTwo.appendChild(humidityEl);  
     }
 };
 
